@@ -61,3 +61,9 @@
 /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glfw/tests/CMakeFiles/install.dir
 /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glfw/tests/CMakeFiles/install/local.dir
 /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glfw/tests/CMakeFiles/install/strip.dir
+/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm/CMakeFiles/edit_cache.dir
+/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm/CMakeFiles/rebuild_cache.dir
+/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm/CMakeFiles/list_install_components.dir
+/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm/CMakeFiles/install.dir
+/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm/CMakeFiles/install/local.dir
+/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm/CMakeFiles/install/strip.dir

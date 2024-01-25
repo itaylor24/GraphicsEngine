@@ -2,9 +2,13 @@
 //shader fragment
 
 out vec4 color;
+in vec3 outColor;
+
+uniform vec4 u_Color;
 
 void main()
 {
-    color = vec4(1.0, 0.0, 0.0, 1.0);
+    //color = u_Color;
+    color =  vec4(outColor.xyz, 1);
 }
 

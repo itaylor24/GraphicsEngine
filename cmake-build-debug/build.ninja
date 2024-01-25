@@ -52,7 +52,42 @@ build cmake_object_order_depends_target_GraphicsEngine: phony || cmake_object_or
 build CMakeFiles/GraphicsEngine.dir/main.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/main.cpp || cmake_object_order_depends_target_GraphicsEngine
   DEP_FILE = CMakeFiles/GraphicsEngine.dir/main.cpp.o.d
   FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
-  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
+build CMakeFiles/GraphicsEngine.dir/Renderer.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/Renderer.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/Renderer.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
+build CMakeFiles/GraphicsEngine.dir/VertexBuffer.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/VertexBuffer.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/VertexBuffer.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
+build CMakeFiles/GraphicsEngine.dir/IndexBuffer.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/IndexBuffer.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/IndexBuffer.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
+build CMakeFiles/GraphicsEngine.dir/VertexArray.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/VertexArray.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/VertexArray.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
+build CMakeFiles/GraphicsEngine.dir/Shader.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/Shader.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/Shader.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
   OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
 
@@ -64,7 +99,7 @@ build CMakeFiles/GraphicsEngine.dir/main.cpp.o: CXX_COMPILER__GraphicsEngine_uns
 #############################################
 # Link the executable GraphicsEngine
 
-build GraphicsEngine: CXX_EXECUTABLE_LINKER__GraphicsEngine_Debug CMakeFiles/GraphicsEngine.dir/main.cpp.o | glfw/src/libglfw3.a /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd /usr/local/lib/libGLEW.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd || glfw/src/libglfw3.a
+build GraphicsEngine: CXX_EXECUTABLE_LINKER__GraphicsEngine_Debug CMakeFiles/GraphicsEngine.dir/main.cpp.o CMakeFiles/GraphicsEngine.dir/Renderer.cpp.o CMakeFiles/GraphicsEngine.dir/VertexBuffer.cpp.o CMakeFiles/GraphicsEngine.dir/IndexBuffer.cpp.o CMakeFiles/GraphicsEngine.dir/VertexArray.cpp.o CMakeFiles/GraphicsEngine.dir/Shader.cpp.o | glfw/src/libglfw3.a /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd /usr/local/lib/libGLEW.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd || glfw/src/libglfw3.a
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = glfw/src/libglfw3.a  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd  /usr/local/lib/libGLEW.dylib  -framework Cocoa  -framework IOKit  -framework CoreFoundation  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd
   OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
@@ -1859,6 +1894,76 @@ build glfw/tests/CMakeFiles/install/strip.util: CUSTOM_COMMAND glfw/tests/all
 build glfw/tests/install/strip: phony glfw/tests/CMakeFiles/install/strip.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /Users/isaactaylor/CLionProjects/GraphicsEngine/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for edit_cache
+
+build glm/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build glm/edit_cache: phony glm/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build glm/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake --regenerate-during-build -S/Users/isaactaylor/CLionProjects/GraphicsEngine -B/Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build glm/rebuild_cache: phony glm/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build glm/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build glm/CMakeFiles/install.util: CUSTOM_COMMAND glm/all
+  COMMAND = cd /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build glm/install: phony glm/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build glm/CMakeFiles/install/local.util: CUSTOM_COMMAND glm/all
+  COMMAND = cd /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build glm/install/local: phony glm/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build glm/CMakeFiles/install/strip.util: CUSTOM_COMMAND glm/all
+  COMMAND = cd /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm && /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build glm/install/strip: phony glm/CMakeFiles/install/strip.util
+
+# =============================================================================
 # Target aliases.
 
 build boing: phony glfw/examples/boing.app/Contents/MacOS/boing
@@ -1935,7 +2040,7 @@ build windows: phony glfw/tests/windows.app/Contents/MacOS/windows
 #############################################
 # Folder: /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug
 
-build all: phony GraphicsEngine glfw/all
+build all: phony GraphicsEngine glfw/all glm/all
 
 # =============================================================================
 
@@ -1966,20 +2071,27 @@ build glfw/src/all: phony glfw/src/libglfw3.a
 build glfw/tests/all: phony glfw/tests/clipboard glfw/tests/events glfw/tests/msaa glfw/tests/glfwinfo glfw/tests/iconify glfw/tests/monitors glfw/tests/reopen glfw/tests/cursor glfw/tests/empty.app/Contents/MacOS/empty glfw/tests/gamma.app/Contents/MacOS/gamma glfw/tests/icon.app/Contents/MacOS/icon glfw/tests/inputlag.app/Contents/MacOS/inputlag glfw/tests/joysticks.app/Contents/MacOS/joysticks glfw/tests/opacity.app/Contents/MacOS/opacity glfw/tests/tearing.app/Contents/MacOS/tearing glfw/tests/threads.app/Contents/MacOS/threads glfw/tests/timeout.app/Contents/MacOS/timeout glfw/tests/title.app/Contents/MacOS/title glfw/tests/triangle-vulkan glfw/tests/windows.app/Contents/MacOS/windows
 
 # =============================================================================
+
+#############################################
+# Folder: /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug/glm
+
+build glm/all: phony
+
+# =============================================================================
 # Built-in targets
 
 
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeDependentOption.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakePackageConfigHelpers.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckIncludeFile.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckLibraryExists.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindDoxygen.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindGLEW.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindOpenGL.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageMessage.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindThreads.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/GNUInstallDirs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/UnixPaths.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/SelectLibraryConfigurations.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/WriteBasicConfigVersionFile.cmake /Users/isaactaylor/CLionProjects/GraphicsEngine/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMake/MacOSXBundleInfo.plist.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/cmake_uninstall.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/examples/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3.pc.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3Config.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw_config.h.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/tests/CMakeLists.txt CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeDependentOption.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakePackageConfigHelpers.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckIncludeFile.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckLibraryExists.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindDoxygen.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindGLEW.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindOpenGL.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageMessage.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindThreads.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/GNUInstallDirs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/UnixPaths.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/SelectLibraryConfigurations.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/WriteBasicConfigVersionFile.cmake /Users/isaactaylor/CLionProjects/GraphicsEngine/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMake/MacOSXBundleInfo.plist.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/cmake_uninstall.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/examples/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3.pc.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3Config.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw_config.h.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/tests/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glm/CMakeLists.txt CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeDependentOption.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakePackageConfigHelpers.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckIncludeFile.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckLibraryExists.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindDoxygen.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindGLEW.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindOpenGL.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageMessage.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindThreads.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/GNUInstallDirs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/UnixPaths.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/SelectLibraryConfigurations.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/WriteBasicConfigVersionFile.cmake /Users/isaactaylor/CLionProjects/GraphicsEngine/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMake/MacOSXBundleInfo.plist.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/cmake_uninstall.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/examples/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3.pc.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3Config.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw_config.h.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/tests/CMakeLists.txt CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake: phony
+build /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/BasicConfigVersion-SameMajorVersion.cmake.in /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCXXInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeCommonLanguageInclude.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeDependentOption.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeGenericSystem.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeInitializeConfigs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeLanguageInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakePackageConfigHelpers.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInformation.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CMakeSystemSpecificInitialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckCSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckIncludeFile.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/CheckLibraryExists.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/CMakeCommonCompilerMacros.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Compiler/GNU.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindDoxygen.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindGLEW.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindOpenGL.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageHandleStandardArgs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindPackageMessage.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/FindThreads.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/GNUInstallDirs.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Internal/CheckSourceCompiles.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-AppleClang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-C.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang-CXX.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Apple-Clang.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin-Initialize.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/Darwin.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/Platform/UnixPaths.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/SelectLibraryConfigurations.cmake /Applications/CLion.app/Contents/bin/cmake/mac/share/cmake-3.26/Modules/WriteBasicConfigVersionFile.cmake /Users/isaactaylor/CLionProjects/GraphicsEngine/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMake/MacOSXBundleInfo.plist.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/cmake_uninstall.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/examples/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3.pc.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw3Config.cmake.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/src/glfw_config.h.in /Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/tests/CMakeLists.txt /Users/isaactaylor/CLionProjects/GraphicsEngine/glm/CMakeLists.txt CMakeCache.txt CMakeFiles/3.26.4/CMakeCCompiler.cmake CMakeFiles/3.26.4/CMakeCXXCompiler.cmake CMakeFiles/3.26.4/CMakeSystem.cmake: phony
 
 
 #############################################
