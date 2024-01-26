@@ -23,7 +23,9 @@ void GLClearError();
 bool GLLogCall(const char* func, const char* filename, int line);
 
 class Renderer {
+
     public:
+        Renderer();
         void Draw(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader);
         void Clear();
 

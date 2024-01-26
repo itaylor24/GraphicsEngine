@@ -4,9 +4,13 @@
 
 #include "Renderer.h"
 
+Renderer::Renderer(){
+    GL_CALL(glEnable(GL_DEPTH_TEST));
+}
 void GLClearError(){
     while(glGetError() != GL_NO_ERROR);
 }
+
 bool GLLogCall(const char* func, const char* filename, int line){
     while(GLenum error  = glGetError()){
         std::cout << "<OpenGL Error> (" << error << ") on "  << func << " at " << filename << " | " << line << std::endl;
@@ -23,5 +27,6 @@ void Renderer::Draw(const VertexArray &VAO, const IndexBuffer &IBO, const Shader
 }
 
 void Renderer::Clear() {
-    GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
+    GL_CALL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+    //GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 }

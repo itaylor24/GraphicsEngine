@@ -9,7 +9,10 @@
 #include <fstream>
 #include <cassert>
 
-
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/string_cast.hpp"
 
 
 Shader::Shader(const std::string& vertexSource, const std::string& fragmentSource)  {
@@ -109,5 +112,11 @@ void Shader::Unbind() const {
 void Shader::SetUniform4f(const std::string &name, float v0, float v1, float v2, float v3) {
     unsigned int location = GetUniformLocation(name);
     GL_CALL(glUniform4f(location, v0, v1, v2, v3));
+}
+
+void Shader::SetUniformMatrix4fv(const std::string &name, glm::mat4& matrix) {
+    unsigned int location = GetUniformLocation(name);
+    GL_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix)));
+    std::cout << glm::to_string(matrix);
 }
 

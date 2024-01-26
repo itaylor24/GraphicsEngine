@@ -15,7 +15,9 @@ add_executable(GraphicsEngine main.cpp
         VertexArray.h
         Shader.cpp
         Shader.h
-        Types.h)
+        Types.h
+        Shapes.cpp
+        Shapes.h)
 
 
 

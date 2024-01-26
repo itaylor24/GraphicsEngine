@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include "glm/glm.hpp"
 
 class Shader {
     private:
@@ -26,6 +27,7 @@ class Shader {
         void Bind() const;
         void Unbind() const;
         void SetUniform4f( const std::string& name, float v0, float v1, float v2, float v3);
+        void SetUniformMatrix4fv(const std::string &name, glm::mat4& matrix);
 
 
 
