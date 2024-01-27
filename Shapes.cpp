@@ -142,3 +142,44 @@ ShapeData Shapes::makeCube(){
 
     return data;
 }
+ShapeData Shapes::makePlane(unsigned int width){
+    //vertices
+    ShapeData data;
+    data.numVertices = width * width;
+    data.vertices = new Vertex[data.numVertices];
+
+
+    for (int i = 0; i < width; ++i) {
+        for (int j = 0; j < width; ++j) {
+            Vertex &vertex = data.vertices[ i * width + j];
+            vertex.position.x = float (j - int(width/2));
+            vertex.position.y = float (i - int(width/2));
+            vertex.position.z = 0;
+            //std::cout << glm::to_string(vertex.position);
+            vertex.color = glm::vec3 ((float)std::rand() / RAND_MAX, (float)std::rand() / RAND_MAX, (float)std::rand() /RAND_MAX);
+            std::cout << glm::to_string(vertex.color) << std::endl;
+        }
+    }
+
+    int index = 0;
+    data.numIndices = (width -1 ) * (width -1) * 6;
+    data.indices = new unsigned int[data.numIndices];
+
+    for (int row = 0; row < width-1; ++row) {
+        for (int col = 0; col < width-1; ++col) {
+
+            data.indices[index++] = (width * col) + row;
+            data.indices[index++] = (width * col) + (row+1);
+            data.indices[index++] = (width * (col+1)) + row;
+
+
+            data.indices[index++] = (width * col) + (row+1);
+            data.indices[index++] = (width * (col+1)) + row;
+            data.indices[index++] = (width * (col+1)) + (row+1);
+
+
+        }
+    }
+
+    return data;
+}

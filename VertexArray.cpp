@@ -3,7 +3,7 @@
 //
 
 #include "VertexArray.h"
-#include "Renderer.h"
+#include "utils.h"
 
 VertexArray::VertexArray() {
         GL_CALL(glGenVertexArrays( 1, &_rendererID  ));

@@ -14,13 +14,9 @@
 #include "Shader.h"
 
 
-#define GL_CALL(func) GLClearError(); \
-    func;                            \
-    assert(GLLogCall(#func, __FILE_NAME__, __LINE__));
 
-
-void GLClearError();
-bool GLLogCall(const char* func, const char* filename, int line);
+//void GLClearError();
+//bool GLLogCall(const char* func, const char* filename, int line);
 
 class Renderer {
 

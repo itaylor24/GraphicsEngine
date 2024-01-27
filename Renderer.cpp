@@ -3,21 +3,12 @@
 //
 
 #include "Renderer.h"
+#include "utils.h"
 
 Renderer::Renderer(){
     GL_CALL(glEnable(GL_DEPTH_TEST));
 }
-void GLClearError(){
-    while(glGetError() != GL_NO_ERROR);
-}
 
-bool GLLogCall(const char* func, const char* filename, int line){
-    while(GLenum error  = glGetError()){
-        std::cout << "<OpenGL Error> (" << error << ") on "  << func << " at " << filename << " | " << line << std::endl;
-        return false;
-    }
-    return true;
-}
 
 void Renderer::Draw(const VertexArray &VAO, const IndexBuffer &IBO, const Shader &shader) {
     shader.Bind();

@@ -17,7 +17,11 @@ add_executable(GraphicsEngine main.cpp
         Shader.h
         Types.h
         Shapes.cpp
-        Shapes.h)
+        Shapes.h
+        Camera.cpp
+        Camera.h
+        utils.h
+        utils.cpp)
 
 
 

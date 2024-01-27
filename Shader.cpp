@@ -3,7 +3,7 @@
 //
 
 #include "Shader.h"
-#include "Renderer.h"
+#include "utils.h"
 
 #include <iostream>
 #include <fstream>
@@ -117,6 +117,5 @@ void Shader::SetUniform4f(const std::string &name, float v0, float v1, float v2,
 void Shader::SetUniformMatrix4fv(const std::string &name, glm::mat4& matrix) {
     unsigned int location = GetUniformLocation(name);
     GL_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix)));
-    std::cout << glm::to_string(matrix);
 }
 

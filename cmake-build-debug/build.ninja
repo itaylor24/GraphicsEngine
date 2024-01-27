@@ -98,6 +98,20 @@ build CMakeFiles/GraphicsEngine.dir/Shapes.cpp.o: CXX_COMPILER__GraphicsEngine_u
   OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
   OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
 
+build CMakeFiles/GraphicsEngine.dir/Camera.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/Camera.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/Camera.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
+build CMakeFiles/GraphicsEngine.dir/utils.cpp.o: CXX_COMPILER__GraphicsEngine_unscanned_Debug /Users/isaactaylor/CLionProjects/GraphicsEngine/utils.cpp || cmake_object_order_depends_target_GraphicsEngine
+  DEP_FILE = CMakeFiles/GraphicsEngine.dir/utils.cpp.o.d
+  FLAGS = -g -std=gnu++17 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/isaactaylor/CLionProjects/GraphicsEngine/glfw/include -I/Users/isaactaylor/CLionProjects/GraphicsEngine -iframework /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/GraphicsEngine.dir
+  OBJECT_FILE_DIR = CMakeFiles/GraphicsEngine.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target GraphicsEngine
@@ -106,7 +120,7 @@ build CMakeFiles/GraphicsEngine.dir/Shapes.cpp.o: CXX_COMPILER__GraphicsEngine_u
 #############################################
 # Link the executable GraphicsEngine
 
-build GraphicsEngine: CXX_EXECUTABLE_LINKER__GraphicsEngine_Debug CMakeFiles/GraphicsEngine.dir/main.cpp.o CMakeFiles/GraphicsEngine.dir/Renderer.cpp.o CMakeFiles/GraphicsEngine.dir/VertexBuffer.cpp.o CMakeFiles/GraphicsEngine.dir/IndexBuffer.cpp.o CMakeFiles/GraphicsEngine.dir/VertexArray.cpp.o CMakeFiles/GraphicsEngine.dir/Shader.cpp.o CMakeFiles/GraphicsEngine.dir/Shapes.cpp.o | glfw/src/libglfw3.a /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd /usr/local/lib/libGLEW.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd || glfw/src/libglfw3.a
+build GraphicsEngine: CXX_EXECUTABLE_LINKER__GraphicsEngine_Debug CMakeFiles/GraphicsEngine.dir/main.cpp.o CMakeFiles/GraphicsEngine.dir/Renderer.cpp.o CMakeFiles/GraphicsEngine.dir/VertexBuffer.cpp.o CMakeFiles/GraphicsEngine.dir/IndexBuffer.cpp.o CMakeFiles/GraphicsEngine.dir/VertexArray.cpp.o CMakeFiles/GraphicsEngine.dir/Shader.cpp.o CMakeFiles/GraphicsEngine.dir/Shapes.cpp.o CMakeFiles/GraphicsEngine.dir/Camera.cpp.o CMakeFiles/GraphicsEngine.dir/utils.cpp.o | glfw/src/libglfw3.a /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd /usr/local/lib/libGLEW.dylib /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd || glfw/src/libglfw3.a
   FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk
   LINK_LIBRARIES = glfw/src/libglfw3.a  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd  /usr/local/lib/libGLEW.dylib  -framework Cocoa  -framework IOKit  -framework CoreFoundation  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/OpenGL.framework/OpenGL.tbd
   OBJECT_DIR = CMakeFiles/GraphicsEngine.dir

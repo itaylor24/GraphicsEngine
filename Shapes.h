@@ -6,7 +6,7 @@
 #define GRAPHICSENGINE_SHAPES_H
 
 #include "Types.h"
-#include "Renderer.h"
+#include "utils.h"
 
 struct ShapeData{
 
@@ -38,6 +38,7 @@ class Shapes {
 public:
     static ShapeData makeTriangle();
     static ShapeData makeCube();
+    static ShapeData makePlane(unsigned int width = 10);
 };
 
 

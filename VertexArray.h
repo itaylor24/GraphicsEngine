@@ -7,6 +7,7 @@
 
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
+#include "utils.h"
 
 class VertexArray {
     private:

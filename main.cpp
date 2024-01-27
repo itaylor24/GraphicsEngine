@@ -7,6 +7,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "utils.h"
 #include "Renderer.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
@@ -15,6 +16,43 @@
 #include "Shader.h"
 #include "Types.h"
 #include "Shapes.h"
+#include "Camera.h"
+
+Camera camera;
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (action == GLFW_PRESS) {
+        std::cout << "Key pressed: " << key << std::endl;
+    }
+    switch (key) {
+        case 68:
+            std::cout << "D" << std::endl;
+            camera.moveRight();
+            break;
+        case 65:
+            std::cout << "A" << std::endl;
+            camera.moveLeft();
+            break;
+        case 83:
+            std::cout << "S" << std::endl;
+            camera.moveBackward();
+            break;
+        case 87:
+            std::cout << "W" << std::endl;
+            camera.moveForward();
+        case 84:
+            std::cout << "T" << std::endl;
+            camera.moveUp();
+            break;
+        case 82:
+            std::cout << "R" << std::endl;
+            camera.moveDown();
+            break;
+        default:
+            // Handle other keys if needed
+            break;
+    }
+}
 
 int main() {
 
@@ -43,40 +81,56 @@ int main() {
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
-
+    glfwSetKeyCallback(window, keyCallback);
 
     if(glewInit() != GLEW_OK)
        std::cout << "Error!" << std::endl;
-
-
-
 
 
     std::cout << glGetString(GL_VERSION) << std::endl;
     std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
 
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), 54.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10.0f);
 
-    glm::mat4 MVP = projectionMatrix * translation * rotation;
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -4.5f));
+    glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, -3.0f));
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), 54.0f, glm::vec3(-1.0f, 0.0f, 0.0f));
+    glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), 54.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 50.0f);
+
+    glm::mat4 MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
 
     ShapeData cube = Shapes::makeCube();
     ShapeData triangle = Shapes::makeTriangle();
+    ShapeData plane = Shapes::makePlane();
 
-    VertexArray VAO;
-    VertexBuffer VBO(cube.vertices, cube.vertexBufferSize());
+    VertexArray VAOcube;
+    VertexArray VAOplane;
+
+    VertexBuffer VBOcube(cube.vertices, cube.vertexBufferSize());
+    VertexBuffer VBOplane(plane.vertices, plane.vertexBufferSize());
+
     //VertexBuffer VBO(triangle.vertices, triangle.vertexBufferSize());
-    VertexBufferLayout layout;
+    VertexBufferLayout layoutCube;
 
-    layout.Push<float>(3);
-    layout.Push<float>(3);
 
-    VAO.AddBuffer(VBO, layout);
-    VAO.Bind();
+    layoutCube.Push<float>(3);
+    layoutCube.Push<float>(3);
 
-    IndexBuffer IBO(cube.indices, cube.indexBufferSize());
+    VAOcube.AddBuffer(VBOcube, layoutCube);
+    VAOcube.Bind();
+
+    IndexBuffer IBOcube(cube.indices, cube.indexBufferSize());
+
+    VertexBufferLayout layoutPlane;
+    layoutPlane.Push<float>(3);
+    layoutPlane.Push<float>(3);
+
+    VAOplane.AddBuffer(VBOplane, layoutPlane);
+    VAOplane.Bind();
+
+    IndexBuffer IBOplane(plane.indices, plane.indexBufferSize());
+
     //IndexBuffer IBO(triangle.indices, triangle.indexBufferSize());
 
     std::cout << cube.vertexBufferSize() << std::endl;
@@ -91,12 +145,12 @@ int main() {
     float redChannel = 0.0f;
     float inc = .01f;
 
-    VAO.Unbind();
 
 
+    VAOplane.Unbind();
     shader.Unbind();
-    IBO.Unbind();
-    VBO.Unbind();
+    IBOplane.Unbind();
+    VBOplane.Unbind();
 
     Renderer renderer;
 
@@ -111,15 +165,30 @@ int main() {
 //        inc = (redChannel >= 1.0f || redChannel <= 0.0f) ? -inc : inc;
 
         shader.Bind();
+        MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
+        shader.SetUniformMatrix4fv("MVP", MVP);
+
 //        shader.SetUniform4f("u_Color", redChannel, .2f, .7f, 1.0f);
 
-        renderer.Draw(VAO, IBO, shader);
+        renderer.Draw(VAOcube, IBOcube, shader);
+
+        MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation2 * rotation2;
+        shader.SetUniformMatrix4fv("MVP", MVP);
+
+        renderer.Draw(VAOplane, IBOplane, shader);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
         /* Poll for and process events */
         glfwPollEvents();
+
+        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+            camera.mouseUpdate(glm::vec2 (xpos, ypos));
+        }
+
     }
 
 
