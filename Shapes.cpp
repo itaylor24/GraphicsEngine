@@ -9,7 +9,7 @@
 
 #include "glm/glm.hpp"
 
-
+#include "utils.h"
 
 ShapeData Shapes::makeTriangle(){
 
@@ -156,7 +156,7 @@ ShapeData Shapes::makePlane(unsigned int width){
             vertex.position.y = float (i - int(width/2));
             vertex.position.z = 0;
             //std::cout << glm::to_string(vertex.position);
-            vertex.color = glm::vec3 ((float)std::rand() / RAND_MAX, (float)std::rand() / RAND_MAX, (float)std::rand() /RAND_MAX);
+            vertex.color = RANDOM_COLOR;
             std::cout << glm::to_string(vertex.color) << std::endl;
         }
     }

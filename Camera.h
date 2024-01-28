@@ -15,7 +15,7 @@ private:
     glm::vec3 _viewDirection;
     glm::vec3 _up;
     glm::vec2  _oldMousePosition;
-    float _moveSpeed = .8f;
+    float _moveSpeed = 10.0f;
 
 public:
     Camera();

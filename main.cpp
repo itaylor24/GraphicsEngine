@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <cassert>
+#include <sstream>
 
 #include "glew/include/GL/glew.h"
 #include "glfw/include/GLFW/glfw3.h"
@@ -18,7 +19,10 @@
 #include "Shapes.h"
 #include "Camera.h"
 
+#include "Mesh.h"
+
 Camera camera;
+
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS) {
@@ -90,13 +94,31 @@ int main() {
     std::cout << glGetString(GL_VERSION) << std::endl;
     std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
+    ShapeData* info = (ShapeData*)malloc(sizeof (ShapeData));
+    unsigned int* indexBuffer = (unsigned int*) malloc(50000000*sizeof (unsigned int));
+    Vertex* vertexBuffer = (Vertex* ) malloc(50000000*sizeof (Vertex));
+    info->indices = indexBuffer;
+    info->vertices = vertexBuffer;
+
+    Mesh::Parse("../pumpkin.obj", info);
+    std::cout << info->numIndices << "WOOOW" << std::endl;
 
 
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -4.5f));
-    glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, -3.0f));
-    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), 54.0f, glm::vec3(-1.0f, 0.0f, 0.0f));
-    glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), 54.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 50.0f);
+    //memcpy(indexBuffer, info->indices, 500000*sizeof (unsigned int));
+
+    for (int i = 0; i < info->numIndices; ++i) {
+        std::cout << info->indices[i];
+    }
+    //Car.showVertices();
+
+    //ShapeData* carData = Car.data;
+
+
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -50.5f));
+    glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, -100.0f));
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 500.0f);
 
     glm::mat4 MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
 
@@ -106,11 +128,16 @@ int main() {
 
     VertexArray VAOcube;
     VertexArray VAOplane;
+    VertexArray VAOCar;
 
     VertexBuffer VBOcube(cube.vertices, cube.vertexBufferSize());
     VertexBuffer VBOplane(plane.vertices, plane.vertexBufferSize());
+    VertexBuffer VBOCar(info->vertices, info->vertexBufferSize());
 
-    //VertexBuffer VBO(triangle.vertices, triangle.vertexBufferSize());
+    std::cout << info->vertexBufferSize() << std::endl;
+    std::cout << sizeof (Vertex) << std::endl;
+
+    VertexBuffer VBO(triangle.vertices, triangle.vertexBufferSize());
     VertexBufferLayout layoutCube;
 
 
@@ -131,7 +158,19 @@ int main() {
 
     IndexBuffer IBOplane(plane.indices, plane.indexBufferSize());
 
-    //IndexBuffer IBO(triangle.indices, triangle.indexBufferSize());
+    VertexBufferLayout layoutCar;
+    layoutCar.Push<float>(3);
+    layoutCar.Push<float>(3);
+
+    VAOCar.AddBuffer(VBOCar, layoutCar);
+    VAOCar.Bind();
+
+    std::cout << info->indexBufferSize();
+
+    IndexBuffer IBOCar(indexBuffer , info->indexBufferSize());
+
+
+    IndexBuffer IBO(triangle.indices, triangle.indexBufferSize());
 
     std::cout << cube.vertexBufferSize() << std::endl;
     std::cout << cube.indexBufferSize() << std::endl;
@@ -170,12 +209,13 @@ int main() {
 
 //        shader.SetUniform4f("u_Color", redChannel, .2f, .7f, 1.0f);
 
-        renderer.Draw(VAOcube, IBOcube, shader);
+        //renderer.Draw(VAOcube, IBOcube, shader);
 
-        MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation2 * rotation2;
+        //MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation2 * rotation2;
         shader.SetUniformMatrix4fv("MVP", MVP);
 
-        renderer.Draw(VAOplane, IBOplane, shader);
+        //renderer.Draw(VAOplane, IBOplane, shader);
+        renderer.Draw(VAOCar, IBOCar, shader);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

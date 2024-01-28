@@ -1,6 +1,6 @@
 /Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S /Users/isaactaylor/CLionProjects/GraphicsEngine -B /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug
 -- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) 
 -- Using Cocoa for window creation
--- Configuring done (0.3s)
+-- Configuring done (0.2s)
 -- Generating done (0.1s)
 -- Build files have been written to: /Users/isaactaylor/CLionProjects/GraphicsEngine/cmake-build-debug

@@ -21,7 +21,9 @@ add_executable(GraphicsEngine main.cpp
         Camera.cpp
         Camera.h
         utils.h
-        utils.cpp)
+        utils.cpp
+        Mesh.cpp
+        Mesh.h)
 
 
 

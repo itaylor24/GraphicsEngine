@@ -18,6 +18,9 @@
     func;                            \
     assert(GLLogCall(#func, __FILE_NAME__, __LINE__));
 
+#define RANDOM_COLOR glm::vec3 ((float)std::rand() / (float)RAND_MAX, 0.0f, 1.0f);
+#define RANDOM_COLOR1 glm::vec3 ((float)std::rand() / (float)RAND_MAX, (float)std::rand() / (float)RAND_MAX, (float)std::rand() / (float)RAND_MAX);
+
 bool GLLogCall(const char* func, const char* filename, int line);
 void GLClearError();
 
