@@ -13,13 +13,21 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/string_cast.hpp"
 
+#include <iostream>
+#include <fstream>
+#include <cassert>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+#define STRIP(token) token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
 
 #define GL_CALL(func) GLClearError(); \
     func;                            \
     assert(GLLogCall(#func, __FILE_NAME__, __LINE__));
 
-#define RANDOM_COLOR glm::vec3 ((float)std::rand() / (float)RAND_MAX, 0.0f, 1.0f);
-#define RANDOM_COLOR1 glm::vec3 ((float)std::rand() / (float)RAND_MAX, (float)std::rand() / (float)RAND_MAX, (float)std::rand() / (float)RAND_MAX);
+#define RANDOM_COLOR glm::vec3 ((float)std::rand() / (float)RAND_MAX, (float)std::rand() / (float)RAND_MAX, (float)std::rand() / (float)RAND_MAX);
 
 bool GLLogCall(const char* func, const char* filename, int line);
 void GLClearError();

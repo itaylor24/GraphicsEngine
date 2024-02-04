@@ -95,26 +95,28 @@ int main() {
     std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     ShapeData* info = (ShapeData*)malloc(sizeof (ShapeData));
-    unsigned int* indexBuffer = (unsigned int*) malloc(50000000*sizeof (unsigned int));
-    Vertex* vertexBuffer = (Vertex* ) malloc(50000000*sizeof (Vertex));
+    unsigned int* indexBuffer = (unsigned int*) malloc(5000000000*sizeof (unsigned int));
+    Vertex* vertexBuffer = (Vertex* ) malloc(5000000000*sizeof (Vertex));
+
     info->indices = indexBuffer;
     info->vertices = vertexBuffer;
 
-    Mesh::Parse("../pumpkin.obj", info);
-    std::cout << info->numIndices << "WOOOW" << std::endl;
+    Mesh::Parse("../models/skeleton.obj", info);
+//    std::cout << info->numIndices << "WOOOW" << std::endl;
 
 
     //memcpy(indexBuffer, info->indices, 500000*sizeof (unsigned int));
 
-    for (int i = 0; i < info->numIndices; ++i) {
-        std::cout << info->indices[i];
-    }
+//    for (int i = 0; i < info->numIndices; ++i) {
+//        std::cout << info->indices[i];
+//    }
+
     //Car.showVertices();
 
     //ShapeData* carData = Car.data;
 
 
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -50.5f));
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.5f));
     glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, -100.0f));
     glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
@@ -159,6 +161,7 @@ int main() {
     IndexBuffer IBOplane(plane.indices, plane.indexBufferSize());
 
     VertexBufferLayout layoutCar;
+    layoutCar.Push<float>(3);
     layoutCar.Push<float>(3);
     layoutCar.Push<float>(3);
 
@@ -207,12 +210,16 @@ int main() {
         MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
         shader.SetUniformMatrix4fv("MVP", MVP);
 
-//        shader.SetUniform4f("u_Color", redChannel, .2f, .7f, 1.0f);
+        glm::vec3 amb(.5f, .1f, .1f);
+        shader.SetUniform3f("ambientLight", amb);
+        shader.SetUniform3f("u_Color", glm::vec3 (.5, .03f, 1.f));
 
         //renderer.Draw(VAOcube, IBOcube, shader);
 
         //MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation2 * rotation2;
         shader.SetUniformMatrix4fv("MVP", MVP);
+        glm::vec3 lightPosition(0.f, 20.0f, 10.f);
+        shader.SetUniform3f("lightPosition", lightPosition);
 
         //renderer.Draw(VAOplane, IBOplane, shader);
         renderer.Draw(VAOCar, IBOCar, shader);
@@ -232,6 +239,9 @@ int main() {
     }
 
 
+    free(info);
+    free(vertexBuffer);
+    free(indexBuffer);
 
     glfwTerminate();
     return 0;
