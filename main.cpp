@@ -101,26 +101,24 @@ int main() {
     info->indices = indexBuffer;
     info->vertices = vertexBuffer;
 
-    Mesh::Parse("../models/skeleton.obj", info);
+    Mesh::Parse("../models/other.obj", info);
 //    std::cout << info->numIndices << "WOOOW" << std::endl;
-
 
     //memcpy(indexBuffer, info->indices, 500000*sizeof (unsigned int));
 
 //    for (int i = 0; i < info->numIndices; ++i) {
-//        std::cout << info->indices[i];
+//        st
+//        d::cout << info->indices[i];
 //    }
 
     //Car.showVertices();
-
     //ShapeData* carData = Car.data;
-
 
     glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.5f));
     glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, -100.0f));
-    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
     glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 500.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10000.0f);
 
     glm::mat4 MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
 
@@ -210,7 +208,7 @@ int main() {
         MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
         shader.SetUniformMatrix4fv("MVP", MVP);
 
-        glm::vec3 amb(.5f, .1f, .1f);
+        glm::vec3 amb(.3f, 0.f, .5f);
         shader.SetUniform3f("ambientLight", amb);
         shader.SetUniform3f("u_Color", glm::vec3 (.5, .03f, 1.f));
 
@@ -218,7 +216,7 @@ int main() {
 
         //MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation2 * rotation2;
         shader.SetUniformMatrix4fv("MVP", MVP);
-        glm::vec3 lightPosition(0.f, 20.0f, 10.f);
+        glm::vec3 lightPosition(0.f, 200.0f, 0.f);
         shader.SetUniform3f("lightPosition", lightPosition);
 
         //renderer.Draw(VAOplane, IBOplane, shader);

@@ -8,12 +8,13 @@ in vec3 thePosition;
 
 uniform vec3 u_Color;
 uniform vec3 lightPosition;
+uniform vec3 ambientLight;
 
 void main()
 {
     vec3 lightVector = normalize(lightPosition - thePosition);
     float brightness = dot(lightVector, theNormal);
     vec3 myColor = brightness * u_Color;
-    color =  vec4(myColor.xyz, 1);
+    color =  vec4(myColor.xyz + ambientLight, 1);
 }
 
