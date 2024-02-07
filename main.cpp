@@ -7,6 +7,9 @@
 #include "glfw/include/GLFW/glfw3.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 #include "utils.h"
 #include "Renderer.h"
@@ -22,7 +25,6 @@
 #include "Mesh.h"
 
 Camera camera;
-
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS) {
@@ -102,7 +104,7 @@ int main() {
     info->vertices = vertexBuffer;
 
     //parse data
-    Mesh::Parse("../models/xyzrgb_dragon.obj", info);
+    Mesh::Parse("../models/pumpkin.obj", info);
 
     //setup MVP matrix
     glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -15.5f));
@@ -130,17 +132,25 @@ int main() {
 
     Renderer renderer;
 
-    glm::vec3 lightPosition(0.f, 200.0f, 0.f);
-    glm::vec3 amb(.2f, 0.f, .5f);
-    glm::vec3 matColor(.8f);
+    float lightPosition[] = {0.f, 200.0f, 0.f};
+    float amb[] = {.2f, 0.f, .3f, .1};
+    glm::vec3 matColor(1.f);
 
     shader.Bind();
-    shader.SetUniform3f("ambientLight", amb);
+
     shader.SetUniform3f("u_Color", matColor);
-    shader.SetUniform3f("lightPosition", lightPosition);
+
 
     shader.Unbind();
     VAOCar.Unbind();
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 410");
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -149,12 +159,32 @@ int main() {
 
         renderer.Clear();
 
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+
+
         MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation * camera.getRotation();
 
         shader.Bind();
         shader.SetUniformMatrix4fv("MVP", MVP);
+        shader.SetUniform3f("ambientLight", glm::vec4 (amb[0], amb[1], amb[2], amb[3]));
+        shader.SetUniform3f("lightPosition", glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
 
         renderer.Draw(VAOCar, IBOCar, shader);
+
+        ImGui::Begin("ColorSelect");
+        ImGui::ColorEdit4("Color", amb);
+
+        ImGui::SliderFloat("LightPosX", &lightPosition[0], -500, 500);
+        ImGui::SliderFloat("LightPosY", &lightPosition[1], -500, 500);
+        ImGui::SliderFloat("LightPosZ", &lightPosition[2], -500, 500);
+
+        ImGui::End();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
@@ -162,7 +192,9 @@ int main() {
         /* Poll for and process events */
         glfwPollEvents();
 
-        if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        ;
+
+        if (!ImGui::GetIO().WantCaptureMouse && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
             double xpos, ypos;
             glfwGetCursorPos(window, &xpos, &ypos);
             camera.mouseUpdate(glm::vec2 (xpos, ypos));
