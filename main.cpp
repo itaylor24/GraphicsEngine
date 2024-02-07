@@ -90,10 +90,10 @@ int main() {
     if(glewInit() != GLEW_OK)
        std::cout << "Error!" << std::endl;
 
-
     std::cout << glGetString(GL_VERSION) << std::endl;
     std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
+    //allocate memory
     ShapeData* info = (ShapeData*)malloc(sizeof (ShapeData));
     unsigned int* indexBuffer = (unsigned int*) malloc(5000000000*sizeof (unsigned int));
     Vertex* vertexBuffer = (Vertex* ) malloc(5000000000*sizeof (Vertex));
@@ -101,62 +101,22 @@ int main() {
     info->indices = indexBuffer;
     info->vertices = vertexBuffer;
 
-    Mesh::Parse("../models/other.obj", info);
-//    std::cout << info->numIndices << "WOOOW" << std::endl;
+    //parse data
+    Mesh::Parse("../models/xyzrgb_dragon.obj", info);
 
-    //memcpy(indexBuffer, info->indices, 500000*sizeof (unsigned int));
-
-//    for (int i = 0; i < info->numIndices; ++i) {
-//        st
-//        d::cout << info->indices[i];
-//    }
-
-    //Car.showVertices();
-    //ShapeData* carData = Car.data;
-
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -10.5f));
-    glm::mat4 translation2 = glm::translate(glm::mat4(1.0f), glm::vec3(-1.0f, 1.0f, -100.0f));
-    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), 1.0f, glm::vec3(-1.0f, -1.0f, 0.0f));
+    //setup MVP matrix
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -15.5f));
+    glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), glm::radians(40.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10000.0f);
-
     glm::mat4 MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
 
-    ShapeData cube = Shapes::makeCube();
-    ShapeData triangle = Shapes::makeTriangle();
-    ShapeData plane = Shapes::makePlane();
 
-    VertexArray VAOcube;
-    VertexArray VAOplane;
+
+    //setup opengl objects
     VertexArray VAOCar;
-
-    VertexBuffer VBOcube(cube.vertices, cube.vertexBufferSize());
-    VertexBuffer VBOplane(plane.vertices, plane.vertexBufferSize());
     VertexBuffer VBOCar(info->vertices, info->vertexBufferSize());
-
-    std::cout << info->vertexBufferSize() << std::endl;
-    std::cout << sizeof (Vertex) << std::endl;
-
-    VertexBuffer VBO(triangle.vertices, triangle.vertexBufferSize());
-    VertexBufferLayout layoutCube;
-
-
-    layoutCube.Push<float>(3);
-    layoutCube.Push<float>(3);
-
-    VAOcube.AddBuffer(VBOcube, layoutCube);
-    VAOcube.Bind();
-
-    IndexBuffer IBOcube(cube.indices, cube.indexBufferSize());
-
-    VertexBufferLayout layoutPlane;
-    layoutPlane.Push<float>(3);
-    layoutPlane.Push<float>(3);
-
-    VAOplane.AddBuffer(VBOplane, layoutPlane);
-    VAOplane.Bind();
-
-    IndexBuffer IBOplane(plane.indices, plane.indexBufferSize());
+    IndexBuffer IBOCar(indexBuffer , info->indexBufferSize());
 
     VertexBufferLayout layoutCar;
     layoutCar.Push<float>(3);
@@ -166,33 +126,21 @@ int main() {
     VAOCar.AddBuffer(VBOCar, layoutCar);
     VAOCar.Bind();
 
-    std::cout << info->indexBufferSize();
-
-    IndexBuffer IBOCar(indexBuffer , info->indexBufferSize());
-
-
-    IndexBuffer IBO(triangle.indices, triangle.indexBufferSize());
-
-    std::cout << cube.vertexBufferSize() << std::endl;
-    std::cout << cube.indexBufferSize() << std::endl;
-
-
     Shader shader("../shaders/Basic.vert", "../shaders/Basic.frag");
 
-    shader.Bind();
-    shader.SetUniformMatrix4fv("MVP", MVP);
-
-    float redChannel = 0.0f;
-    float inc = .01f;
-
-
-
-    VAOplane.Unbind();
-    shader.Unbind();
-    IBOplane.Unbind();
-    VBOplane.Unbind();
-
     Renderer renderer;
+
+    glm::vec3 lightPosition(0.f, 200.0f, 0.f);
+    glm::vec3 amb(.2f, 0.f, .5f);
+    glm::vec3 matColor(.8f);
+
+    shader.Bind();
+    shader.SetUniform3f("ambientLight", amb);
+    shader.SetUniform3f("u_Color", matColor);
+    shader.SetUniform3f("lightPosition", lightPosition);
+
+    shader.Unbind();
+    VAOCar.Unbind();
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -201,25 +149,11 @@ int main() {
 
         renderer.Clear();
 
-//        redChannel += inc;
-//        inc = (redChannel >= 1.0f || redChannel <= 0.0f) ? -inc : inc;
+        MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation * camera.getRotation();
 
         shader.Bind();
-        MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
         shader.SetUniformMatrix4fv("MVP", MVP);
 
-        glm::vec3 amb(.3f, 0.f, .5f);
-        shader.SetUniform3f("ambientLight", amb);
-        shader.SetUniform3f("u_Color", glm::vec3 (.5, .03f, 1.f));
-
-        //renderer.Draw(VAOcube, IBOcube, shader);
-
-        //MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation2 * rotation2;
-        shader.SetUniformMatrix4fv("MVP", MVP);
-        glm::vec3 lightPosition(0.f, 200.0f, 0.f);
-        shader.SetUniform3f("lightPosition", lightPosition);
-
-        //renderer.Draw(VAOplane, IBOplane, shader);
         renderer.Draw(VAOCar, IBOCar, shader);
 
         /* Swap front and back buffers */

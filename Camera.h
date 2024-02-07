@@ -15,11 +15,14 @@ private:
     glm::vec3 _viewDirection;
     glm::vec3 _up;
     glm::vec2  _oldMousePosition;
+    glm::mat4 _rotation = glm::mat4(1.f);
     float _moveSpeed = 1.5f;
 
 public:
     Camera();
     glm::mat4 getWorldToViewMatrix() const;
+    glm::mat4 getRotation();
+
     void mouseUpdate(const glm::vec2& newMousePosition);
 
     void moveForward();
