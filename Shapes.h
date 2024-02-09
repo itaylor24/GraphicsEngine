@@ -37,7 +37,7 @@ struct ShapeData{
 class Shapes {
 public:
     static ShapeData makeTriangle();
-    static ShapeData makeCube();
+    static ShapeData makeCube(float size, glm::vec3 color);
     static ShapeData makePlane(unsigned int width = 10);
 };
 

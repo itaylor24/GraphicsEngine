@@ -100,11 +100,19 @@ int main() {
     unsigned int* indexBuffer = (unsigned int*) malloc(5000000000*sizeof (unsigned int));
     Vertex* vertexBuffer = (Vertex* ) malloc(5000000000*sizeof (Vertex));
 
+//    ShapeData* lightInfo = (ShapeData*)malloc(sizeof (ShapeData));
+//    unsigned int* lightIB = (unsigned int*) malloc(50000*sizeof (unsigned int));
+//    Vertex* lightVB = (Vertex* ) malloc(50000*sizeof (Vertex));
+
     info->indices = indexBuffer;
     info->vertices = vertexBuffer;
+//
+//    lightInfo->indices = lightIB;
+//    lightInfo->vertices = lightVB;
 
     //parse data
     Mesh::Parse("../models/pumpkin.obj", info);
+//    Mesh::Parse("../models/sphere.obj", lightInfo);
 
     //setup MVP matrix
     glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -15.5f));
@@ -112,7 +120,6 @@ int main() {
     glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10000.0f);
     glm::mat4 MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
-
 
 
     //setup opengl objects
@@ -128,11 +135,30 @@ int main() {
     VAOCar.AddBuffer(VBOCar, layoutCar);
     VAOCar.Bind();
 
-    Shader shader("../shaders/Basic.vert", "../shaders/Basic.frag");
+    ShapeData light = Shapes::makeCube(.1f, glm::vec3(1.f));
 
+    for (int i = 0; i < light.numVertices; ++i) {
+        std::cout << glm::to_string(light.vertices[i].position) << " POS" << std::endl;
+        std::cout << glm::to_string(light.vertices[i].color) << " COLOR" << std::endl;
+        std::cout << glm::to_string(light.vertices[i].normal) << " NORM" << std::endl;
+    }
+
+    VertexArray VAOLight;
+    VertexBuffer VBOLight(light.vertices, light.vertexBufferSize());
+    IndexBuffer IBOLight(light.indices , light.indexBufferSize());
+
+    VertexBufferLayout layoutLight;
+    layoutLight.Push<float>(3);
+    layoutLight.Push<float>(3);
+    layoutLight.Push<float>(3);
+
+    VAOLight.AddBuffer(VBOLight, layoutLight);
+    VAOLight.Bind();
+
+    Shader shader("../shaders/Basic.vert", "../shaders/Basic.frag");
     Renderer renderer;
 
-    float lightPosition[] = {0.f, 200.0f, 0.f};
+    float lightPosition[] = {0.f, 60.0f, 0.f};
     float amb[] = {.2f, 0.f, .3f, .1};
     glm::vec3 matColor(1.f);
 
@@ -140,9 +166,9 @@ int main() {
 
     shader.SetUniform3f("u_Color", matColor);
 
-
     shader.Unbind();
     VAOCar.Unbind();
+    VAOLight.Unbind();
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -163,8 +189,6 @@ int main() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-
-
         MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation * camera.getRotation();
 
         shader.Bind();
@@ -174,12 +198,19 @@ int main() {
 
         renderer.Draw(VAOCar, IBOCar, shader);
 
+        shader.SetUniform3f("ambientLight", glm::vec4 (1.f));
+
+        glm::mat4 lightTranslation = glm::translate(glm::mat4 (1.f), glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
+        MVP = projectionMatrix * camera.getWorldToViewMatrix() * lightTranslation * rotation * camera.getRotation();
+        shader.SetUniformMatrix4fv("MVP", MVP);
+        renderer.Draw(VAOLight, IBOLight, shader);
+
         ImGui::Begin("ColorSelect");
         ImGui::ColorEdit4("Color", amb);
 
-        ImGui::SliderFloat("LightPosX", &lightPosition[0], -500, 500);
-        ImGui::SliderFloat("LightPosY", &lightPosition[1], -500, 500);
-        ImGui::SliderFloat("LightPosZ", &lightPosition[2], -500, 500);
+        ImGui::SliderFloat("LightPosX", &lightPosition[0], -60, 60);
+        ImGui::SliderFloat("LightPosY", &lightPosition[1], -60, 60);
+        ImGui::SliderFloat("LightPosZ", &lightPosition[2], -60, 60);
 
         ImGui::End();
 
@@ -192,8 +223,6 @@ int main() {
         /* Poll for and process events */
         glfwPollEvents();
 
-        ;
-
         if (!ImGui::GetIO().WantCaptureMouse && glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
             double xpos, ypos;
             glfwGetCursorPos(window, &xpos, &ypos);
@@ -201,7 +230,6 @@ int main() {
         }
 
     }
-
 
     free(info);
     free(vertexBuffer);
