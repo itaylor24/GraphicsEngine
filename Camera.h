@@ -14,9 +14,16 @@ private:
     glm::vec3 _position;
     glm::vec3 _viewDirection;
     glm::vec3 _up;
+    glm::vec3 _right;
+    glm::vec3 _camFocus;
+    glm::vec3 _initialView;
     glm::vec2  _oldMousePosition;
     glm::mat4 _rotation = glm::mat4(1.f);
-    float _moveSpeed = 1.5f;
+    float _moveSpeed = 10.f;
+    float _yaw;
+    float _pitch;
+    float _radius;
+
 
 public:
     Camera();
@@ -33,6 +40,7 @@ public:
 
     void moveUp();
     void moveDown();
+    glm::vec3 getViewDirection();
 
 };
 

@@ -4,50 +4,72 @@
 
 #include "Camera.h"
 #include "glfw/include/GLFW/glfw3.h"
+#include <glm/gtx/rotate_vector.hpp>
 
 Camera::Camera():
-    _viewDirection(0.0f, 0.0f, -1.0f),
-    _up(0.0f, 1.0f, 0.0f),
-    _position(0.f)
-    {
 
+    _camFocus(0.0f,0.f, 0.0f),
+    _up(0.0f, 1.0f, 0.0f),
+    _yaw(0.f),
+    _pitch(0.f),
+    _radius(-15.f),
+    _initialView(0.f,0.f,-1.f),
+    _right(1.0f, 0.0f, 0.0f)
+    {
+        _position = _camFocus + (_initialView*_radius);
+        _viewDirection = _camFocus - _position;
     }
 
 void Camera::mouseUpdate(const glm::vec2& newMousePosition){
 
     glm::vec2 mouseDelta = newMousePosition - _oldMousePosition;
-    std::cout << glm::length(mouseDelta) << std::endl;
+    //std::cout << glm::length(mouseDelta) << std::endl;
     glm::mat4 rotation(1.0f);
 
-    if (glm::length(mouseDelta) < 10.f && glm::length(mouseDelta) > 0){
+    if (glm::length(mouseDelta) < 30.f && glm::length(mouseDelta) > 0){
 
-//        _viewDirection = glm::mat3 (glm::rotate(glm::mat4 (1.0f), glm::radians(mouseDelta.x)/7.f, _up)) * _viewDirection;
-//        glm::vec3 toRotateAround = glm::cross(_viewDirection, _up);
-//        _viewDirection = glm::mat3 (glm::rotate(glm::mat4 (1.0f), glm::radians(mouseDelta.y /7.f), toRotateAround)) * _viewDirection;
+        _yaw += -1.f*mouseDelta.x;
+        _pitch += -1.f*(mouseDelta.y);
 
-        glm::vec3 toRotateAround = glm::cross(glm::vec3(glm::normalize(glm::vec2 (mouseDelta.x, mouseDelta.y * -1.f)), 0.f), glm::vec3(0.f, 0.f, -1.f));
-        rotation = glm::rotate(glm::mat4(1.0f), .04f * glm::length(mouseDelta),  glm::normalize(toRotateAround));
+        if (_pitch >= 89.0f)
+            _pitch = 89.0f;
+        if (_pitch <= -89.0f)
+            _pitch = -89.0f;
+
+        glm::vec3  camToPos = glm::rotate(_initialView, glm::radians(_pitch), _right);
+        camToPos = glm::rotate(camToPos, glm::radians(_yaw), _up);
+
+        _position = _camFocus + (camToPos*_radius);
+        _viewDirection = _camFocus - _position;
 
     }
 
-    _oldMousePosition = newMousePosition;
-    _rotation =  rotation * _rotation;
 
+    _oldMousePosition = newMousePosition;
 
 }
 glm::mat4 Camera::getWorldToViewMatrix() const{
-    return glm::lookAt(_position, _position+_viewDirection, _up);
+    return glm::lookAt(_position, _camFocus, _up);
 }
 
 glm::mat4 Camera::getRotation() {
-    return _rotation;
+    //return _rotation;
+    return glm::mat4(1.f);
 }
 
 void Camera::moveForward(){
-    _position += _moveSpeed * _viewDirection;
+//    _position += _moveSpeed * glm::normalize(_viewDirection);
+//    glm::normalize(_viewDirection =_camFocus-_position);
+    _radius += _moveSpeed;
+    _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius);
+    _viewDirection = _camFocus - _position;
 }
 void Camera::moveBackward(){
-    _position += _moveSpeed * -1.f * _viewDirection;
+//    _position += _moveSpeed * -1.f * glm::normalize(_viewDirection);
+//    _viewDirection =glm::normalize(_camFocus-_position);
+    _radius -= _moveSpeed;
+    _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius);
+    _viewDirection = _camFocus - _position;
 }
 void Camera::moveLeft(){
 //    _position += _moveSpeed * -1.f * glm::cross(_viewDirection, _up);

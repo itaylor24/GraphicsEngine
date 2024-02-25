@@ -114,8 +114,7 @@ int main() {
     Mesh::Parse("../models/pumpkin.obj", info);
 //    Mesh::Parse("../models/sphere.obj", lightInfo);
 
-    //setup MVP matrix
-    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -15.5f));
+    glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
     glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), glm::radians(40.f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10000.0f);
@@ -123,19 +122,19 @@ int main() {
 
 
     //setup opengl objects
-    VertexArray VAOCar;
-    VertexBuffer VBOCar(info->vertices, info->vertexBufferSize());
-    IndexBuffer IBOCar(indexBuffer , info->indexBufferSize());
+    VertexArray VAOObj;
+    VertexBuffer VBOObj(info->vertices, info->vertexBufferSize());
+    IndexBuffer IBOObj(indexBuffer , info->indexBufferSize());
 
     VertexBufferLayout layoutCar;
     layoutCar.Push<float>(3);
     layoutCar.Push<float>(3);
     layoutCar.Push<float>(3);
 
-    VAOCar.AddBuffer(VBOCar, layoutCar);
-    VAOCar.Bind();
+    VAOObj.AddBuffer(VBOObj, layoutCar);
+    VAOObj.Bind();
 
-    ShapeData light = Shapes::makeCube(.1f, glm::vec3(1.f));
+    ShapeData light = Shapes::makeCube(1.f, glm::vec3(1.f));
 
     for (int i = 0; i < light.numVertices; ++i) {
         std::cout << glm::to_string(light.vertices[i].position) << " POS" << std::endl;
@@ -158,7 +157,7 @@ int main() {
     Shader shader("../shaders/Basic.vert", "../shaders/Basic.frag");
     Renderer renderer;
 
-    float lightPosition[] = {0.f, 60.0f, 0.f};
+    float lightPosition[] = {0.f, 30.0f, 0.f};
     float amb[] = {.2f, 0.f, .3f, .1};
     glm::vec3 matColor(1.f);
 
@@ -167,7 +166,7 @@ int main() {
     shader.SetUniform3f("u_Color", matColor);
 
     shader.Unbind();
-    VAOCar.Unbind();
+    VAOObj.Unbind();
     VAOLight.Unbind();
 
     IMGUI_CHECKVERSION();
@@ -189,19 +188,19 @@ int main() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation * camera.getRotation();
+        MVP = projectionMatrix * camera.getWorldToViewMatrix(); //* translation * rotation;
 
         shader.Bind();
         shader.SetUniformMatrix4fv("MVP", MVP);
         shader.SetUniform3f("ambientLight", glm::vec4 (amb[0], amb[1], amb[2], amb[3]));
         shader.SetUniform3f("lightPosition", glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
 
-        renderer.Draw(VAOCar, IBOCar, shader);
+        renderer.Draw(VAOObj, IBOObj, shader);
 
         shader.SetUniform3f("ambientLight", glm::vec4 (1.f));
 
         glm::mat4 lightTranslation = glm::translate(glm::mat4 (1.f), glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
-        MVP = projectionMatrix * camera.getWorldToViewMatrix() * lightTranslation * rotation * camera.getRotation();
+        MVP = projectionMatrix * camera.getWorldToViewMatrix() * lightTranslation; //* rotation * camera.getRotation();
         shader.SetUniformMatrix4fv("MVP", MVP);
         renderer.Draw(VAOLight, IBOLight, shader);
 
