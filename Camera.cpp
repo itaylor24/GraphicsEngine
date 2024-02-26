@@ -7,16 +7,17 @@
 #include <glm/gtx/rotate_vector.hpp>
 
 Camera::Camera():
-
     _camFocus(0.0f,0.f, 0.0f),
     _up(0.0f, 1.0f, 0.0f),
     _yaw(0.f),
     _pitch(0.f),
-    _radius(-15.f),
+    _radius(15.f),
     _initialView(0.f,0.f,-1.f),
-    _right(1.0f, 0.0f, 0.0f)
+    _right(1.0f, 0.0f, 0.0f),
+    _rotation(1.f),
+    _moveSpeed(10.f)
     {
-        _position = _camFocus + (_initialView*_radius);
+        _position = _camFocus + (_initialView*_radius * -1.f);
         _viewDirection = _camFocus - _position;
     }
 
@@ -39,7 +40,7 @@ void Camera::mouseUpdate(const glm::vec2& newMousePosition){
         glm::vec3  camToPos = glm::rotate(_initialView, glm::radians(_pitch), _right);
         camToPos = glm::rotate(camToPos, glm::radians(_yaw), _up);
 
-        _position = _camFocus + (camToPos*_radius);
+        _position = _camFocus + (camToPos*_radius * -1.f);
         _viewDirection = _camFocus - _position;
 
     }
@@ -48,27 +49,29 @@ void Camera::mouseUpdate(const glm::vec2& newMousePosition){
     _oldMousePosition = newMousePosition;
 
 }
+
 glm::mat4 Camera::getWorldToViewMatrix() const{
     return glm::lookAt(_position, _camFocus, _up);
-}
-
-glm::mat4 Camera::getRotation() {
-    //return _rotation;
-    return glm::mat4(1.f);
 }
 
 void Camera::moveForward(){
 //    _position += _moveSpeed * glm::normalize(_viewDirection);
 //    glm::normalize(_viewDirection =_camFocus-_position);
-    _radius += _moveSpeed;
-    _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius);
+    if (_radius > 5.f) {
+        _radius -= _moveSpeed;
+    }else{
+        _radius = 5.f;
+    }
+    _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius * -1.f);
     _viewDirection = _camFocus - _position;
 }
 void Camera::moveBackward(){
 //    _position += _moveSpeed * -1.f * glm::normalize(_viewDirection);
 //    _viewDirection =glm::normalize(_camFocus-_position);
-    _radius -= _moveSpeed;
-    _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius);
+
+    _radius += _moveSpeed;
+
+    _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius * -1.f);
     _viewDirection = _camFocus - _position;
 }
 void Camera::moveLeft(){

@@ -196,8 +196,7 @@ int main() {
         shader.SetUniform3f("lightPosition", glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
 
         renderer.Draw(VAOObj, IBOObj, shader);
-
-        shader.SetUniform3f("ambientLight", glm::vec4 (1.f));
+        shader.SetUniform3f("ambientLight", glm::vec4 (5.f));
 
         glm::mat4 lightTranslation = glm::translate(glm::mat4 (1.f), glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
         MVP = projectionMatrix * camera.getWorldToViewMatrix() * lightTranslation; //* rotation * camera.getRotation();
@@ -207,9 +206,9 @@ int main() {
         ImGui::Begin("ColorSelect");
         ImGui::ColorEdit4("Color", amb);
 
-        ImGui::SliderFloat("LightPosX", &lightPosition[0], -60, 60);
-        ImGui::SliderFloat("LightPosY", &lightPosition[1], -60, 60);
-        ImGui::SliderFloat("LightPosZ", &lightPosition[2], -60, 60);
+        ImGui::SliderFloat("LightPosX", &lightPosition[0], -120, 120);
+        ImGui::SliderFloat("LightPosY", &lightPosition[1], -120, 120);
+        ImGui::SliderFloat("LightPosZ", &lightPosition[2], -120, 120);
 
         ImGui::End();
 

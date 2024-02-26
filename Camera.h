@@ -18,8 +18,8 @@ private:
     glm::vec3 _camFocus;
     glm::vec3 _initialView;
     glm::vec2  _oldMousePosition;
-    glm::mat4 _rotation = glm::mat4(1.f);
-    float _moveSpeed = 10.f;
+    glm::mat4 _rotation;
+    float _moveSpeed;
     float _yaw;
     float _pitch;
     float _radius;
@@ -28,8 +28,6 @@ private:
 public:
     Camera();
     glm::mat4 getWorldToViewMatrix() const;
-    glm::mat4 getRotation();
-
     void mouseUpdate(const glm::vec2& newMousePosition);
 
     void moveForward();
@@ -40,7 +38,6 @@ public:
 
     void moveUp();
     void moveDown();
-    glm::vec3 getViewDirection();
 
 };
 

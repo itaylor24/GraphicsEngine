@@ -14,7 +14,10 @@ void main()
 {
     vec3 lightVector = normalize(lightPosition - thePosition);
     float brightness = dot(lightVector, theNormal);
-    vec3 myColor = brightness * u_Color;
-    color =  vec4(myColor.xyz + ambientLight, 1);
+    vec3 myColor = brightness * ambientLight;
+
+    myColor = vec3(clamp(myColor.x,0.f,1.f),clamp(myColor.y,0.f,1.f),clamp(myColor.z,0.f,1.f));
+
+    color =  vec4((.4*vec3(1.f,1.f,1.f))*ambientLight + myColor.xyz*2.f, 1);
 }
 
