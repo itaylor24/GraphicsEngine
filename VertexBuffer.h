@@ -11,6 +11,7 @@ class VertexBuffer {
         unsigned int _rendererID;
     public:
         VertexBuffer(const void* data, unsigned int size);
+        VertexBuffer();
         ~VertexBuffer();
 
         void Bind() const;

@@ -12,6 +12,7 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "Shader.h"
+#include "Mesh.h"
 
 
 
@@ -22,7 +23,8 @@ class Renderer {
 
     public:
         Renderer();
-        void Draw(const VertexArray& VAO, const IndexBuffer& IBO, const Shader& shader);
+        void Draw(Mesh* mesh, const Shader& shader);
+        void Draw(VertexArray& VAO, IndexBuffer& IBO, const Shader &shader);
         void Clear();
 
 

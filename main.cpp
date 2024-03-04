@@ -77,7 +77,7 @@ int main() {
     int width = 800;
     int height = 800;
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(width, height, "OpenGL", nullptr, nullptr);
+    window = glfwCreateWindow(width, height, "GraphicsEngine", nullptr, nullptr);
     if (!window)
     {
         glfwTerminate();
@@ -86,7 +86,6 @@ int main() {
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-
     glfwSetKeyCallback(window, keyCallback);
 
     if(glewInit() != GLEW_OK)
@@ -96,63 +95,76 @@ int main() {
     std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
 
     //allocate memory
-    ShapeData* info = (ShapeData*)malloc(sizeof (ShapeData));
-    unsigned int* indexBuffer = (unsigned int*) malloc(5000000000*sizeof (unsigned int));
-    Vertex* vertexBuffer = (Vertex* ) malloc(5000000000*sizeof (Vertex));
+
+    //OBJ Class
+
+    //OBJ mesh = new OBJ('../models/pumpkin.obj');
+    //-MVP matrix
+    //-Color
+    //
+
+//    ShapeData* info = (ShapeData*)malloc(sizeof (ShapeData));
+//    unsigned int* indexBuffer = (unsigned int*) malloc(5000000000*sizeof (unsigned int));
+//    Vertex* vertexBuffer = (Vertex* ) malloc(5000000000*sizeof (Vertex));
 
 //    ShapeData* lightInfo = (ShapeData*)malloc(sizeof (ShapeData));
 //    unsigned int* lightIB = (unsigned int*) malloc(50000*sizeof (unsigned int));
 //    Vertex* lightVB = (Vertex* ) malloc(50000*sizeof (Vertex));
-
-    info->indices = indexBuffer;
-    info->vertices = vertexBuffer;
+//
+//    info->indices = indexBuffer;
+//    info->vertices = vertexBuffer;
 //
 //    lightInfo->indices = lightIB;
 //    lightInfo->vertices = lightVB;
 
     //parse data
-    Mesh::Parse("../models/pumpkin.obj", info);
-//    Mesh::Parse("../models/sphere.obj", lightInfo);
+    Mesh* mesh = new Mesh("../models/xyzrgb_dragon.obj");
+    //Mesh* mesh2 = new Mesh("../models/pumpkin.obj");
 
+    //Parse("../models/xyzrgb_dragon.obj", info);
+//    Mesh::Parse("../models/sphere.obj", lightInfo);
+//
     glm::mat4 translation = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
     glm::mat4 rotation2 = glm::rotate(glm::mat4(1.0f), glm::radians(40.f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(0.f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10000.0f);
     glm::mat4 MVP = projectionMatrix * camera.getWorldToViewMatrix() * translation * rotation;
-
-
-    //setup opengl objects
-    VertexArray VAOObj;
-    VertexBuffer VBOObj(info->vertices, info->vertexBufferSize());
-    IndexBuffer IBOObj(indexBuffer , info->indexBufferSize());
-
-    VertexBufferLayout layoutCar;
-    layoutCar.Push<float>(3);
-    layoutCar.Push<float>(3);
-    layoutCar.Push<float>(3);
-
-    VAOObj.AddBuffer(VBOObj, layoutCar);
-    VAOObj.Bind();
+//
+//
+//    //setup opengl objects
+//    VertexArray VAOObj;
+////    VertexBuffer VBOObj(info->vertices, info->vertexBufferSize());
+////    IndexBuffer IBOObj(indexBuffer , info->indexBufferSize());
+//    VertexBuffer VBOObj(info->vertices, info->vertexBufferSize());
+//    IndexBuffer IBOObj(indexBuffer , info->indexBufferSize());
+//
+//    VertexBufferLayout layoutCar;
+//    layoutCar.Push<float>(3);
+//    layoutCar.Push<float>(3);
+//    layoutCar.Push<float>(3);
+//
+//    VAOObj.AddBuffer(VBOObj, layoutCar);
+//    VAOObj.Bind();
 
     ShapeData light = Shapes::makeCube(1.f, glm::vec3(1.f));
-
-    for (int i = 0; i < light.numVertices; ++i) {
-        std::cout << glm::to_string(light.vertices[i].position) << " POS" << std::endl;
-        std::cout << glm::to_string(light.vertices[i].color) << " COLOR" << std::endl;
-        std::cout << glm::to_string(light.vertices[i].normal) << " NORM" << std::endl;
-    }
-
-    VertexArray VAOLight;
-    VertexBuffer VBOLight(light.vertices, light.vertexBufferSize());
-    IndexBuffer IBOLight(light.indices , light.indexBufferSize());
-
-    VertexBufferLayout layoutLight;
-    layoutLight.Push<float>(3);
-    layoutLight.Push<float>(3);
-    layoutLight.Push<float>(3);
-
-    VAOLight.AddBuffer(VBOLight, layoutLight);
-    VAOLight.Bind();
+//
+//    for (int i = 0; i < light.numVertices; ++i) {
+//        std::cout << glm::to_string(light.vertices[i].position) << " POS" << std::endl;
+//        std::cout << glm::to_string(light.vertices[i].color) << " COLOR" << std::endl;
+//        std::cout << glm::to_string(light.vertices[i].normal) << " NORM" << std::endl;
+//    }
+    Mesh* lightMesh = new Mesh(&light);
+//    VertexArray VAOLight;
+//    VertexBuffer VBOLight(light.vertices, light.vertexBufferSize());
+//    IndexBuffer IBOLight(light.indices , light.indexBufferSize());
+//
+//    VertexBufferLayout layoutLight;
+//    layoutLight.Push<float>(3);
+//    layoutLight.Push<float>(3);
+//    layoutLight.Push<float>(3);
+//
+//    VAOLight.AddBuffer(VBOLight, layoutLight);
+//    VAOLight.Bind();
 
     Shader shader("../shaders/Basic.vert", "../shaders/Basic.frag");
     Renderer renderer;
@@ -166,8 +178,8 @@ int main() {
     shader.SetUniform3f("u_Color", matColor);
 
     shader.Unbind();
-    VAOObj.Unbind();
-    VAOLight.Unbind();
+    //mesh._mVAO->Unbind();
+    //VAOLight.Unbind();
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -191,17 +203,20 @@ int main() {
         MVP = projectionMatrix * camera.getWorldToViewMatrix(); //* translation * rotation;
 
         shader.Bind();
+
         shader.SetUniformMatrix4fv("MVP", MVP);
-        shader.SetUniform3f("ambientLight", glm::vec4 (amb[0], amb[1], amb[2], amb[3]));
+        shader.SetUniform3f("ambientLight", glm::vec3 (amb[0], amb[1], amb[2]));
         shader.SetUniform3f("lightPosition", glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
 
-        renderer.Draw(VAOObj, IBOObj, shader);
+        renderer.Draw(mesh, shader);
+        //renderer.Draw(*mesh2->_mVAO, *mesh2->_mIBO, shader);
+
         shader.SetUniform3f("ambientLight", glm::vec4 (5.f));
 
         glm::mat4 lightTranslation = glm::translate(glm::mat4 (1.f), glm::vec3 (lightPosition[0], lightPosition[1], lightPosition[2]));
         MVP = projectionMatrix * camera.getWorldToViewMatrix() * lightTranslation; //* rotation * camera.getRotation();
         shader.SetUniformMatrix4fv("MVP", MVP);
-        renderer.Draw(VAOLight, IBOLight, shader);
+        renderer.Draw(lightMesh, shader);
 
         ImGui::Begin("ColorSelect");
         ImGui::ColorEdit4("Color", amb);
@@ -229,9 +244,9 @@ int main() {
 
     }
 
-    free(info);
-    free(vertexBuffer);
-    free(indexBuffer);
+//    free(info);
+//    free(vertexBuffer);
+//    free(indexBuffer);
 
     glfwTerminate();
     return 0;

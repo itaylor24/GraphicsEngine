@@ -12,6 +12,7 @@ private:
     unsigned int _count;
 public:
     IndexBuffer(const unsigned int* data, unsigned int count);
+    IndexBuffer();
     ~IndexBuffer();
 
     void Bind() const ;

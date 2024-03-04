@@ -10,7 +10,14 @@ Renderer::Renderer(){
 }
 
 
-void Renderer::Draw(const VertexArray &VAO, const IndexBuffer &IBO, const Shader &shader) {
+void Renderer::Draw(Mesh* mesh, const Shader &shader) {
+    shader.Bind();
+    mesh->_mVAO->Bind();
+    mesh->_mIBO->Bind();
+    GL_CALL(glDrawElements(GL_TRIANGLES, mesh->_mIBO->getCount(), GL_UNSIGNED_INT, nullptr));
+}
+
+void Renderer::Draw(VertexArray& VAO, IndexBuffer& IBO, const Shader &shader) {
     shader.Bind();
     VAO.Bind();
     IBO.Bind();

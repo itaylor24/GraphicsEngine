@@ -13,18 +13,28 @@
 #include "Types.h"
 #include "utils.h"
 #include "Shapes.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 class Mesh {
 
-
-
 public:
-    static void Parse(std::string filename, ShapeData* data);
-    Mesh(std::string filename, ShapeData* info);
+    void Parse(std::string filename);
+    Mesh(std::string filename);
+    Mesh(ShapeData* shape);
     void showVertices();
-    ShapeData* data;
+    ShapeData* _data;
     static std::vector<glm::vec3> computeNormals(std::vector<Vertex>& vertexArray,
                                           std::vector<unsigned int>& indexArray);
+    ShapeData* getInfo();
+
+    VertexArray* _mVAO;
+    VertexBuffer* _mVBO;
+    IndexBuffer* _mIBO;
+
+    int _vertexCount;
+    int _indexCount;
 };
 
 

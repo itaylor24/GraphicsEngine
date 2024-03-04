@@ -41,7 +41,6 @@ ShapeData Shapes::makeTriangle(){
 
     return data;
 }
-
 ShapeData Shapes::makeCube(float size, glm::vec3 color){
     ShapeData data;
 

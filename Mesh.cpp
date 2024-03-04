@@ -13,35 +13,31 @@
 #include "utils.h"
 #include "Shapes.h"
 
-Mesh::Mesh(std::string filename, ShapeData* info) {
-
-    Parse(filename, info);
-
-//    std::vector<Vertex>& vertices = info.first;
-//    std::vector<unsigned int>& indices = info.second;
-//
-//    auto data = std::make_unique<ShapeData>();
-//
-//    data->numIndices = indices.size();
-//    data->numVertices = vertices.size();
-//
-//    data->vertices = &vertices[0];
-//    data->indices = &indices[0];
-
-//    for (int i = 0; i < data.numVertices; ++i) {
-//        data.vertices[i].position.x = vertices[i].position.x;
-//        data.vertices[i].position.y = vertices[i].position.y;
-//        data.vertices[i].position.z = vertices[i].position.z;
-//        data.vertices[i].color = vertices[i].color;
-//    }
-//
-//    for (int i = 0; i < data.numIndices; ++i) {
-//        data.indices[i] = indices[i];
-//    }
-
+Mesh::Mesh(std::string filename){
+    _mVAO = new VertexArray;
+    Parse(filename);
 }
 
-void Mesh::Parse(std::string filename, ShapeData* data){
+Mesh::Mesh(ShapeData* shape){
+
+    _mVAO = new VertexArray;
+
+    _mVBO = new VertexBuffer(shape->vertices, shape->vertexBufferSize());
+    _mIBO = new IndexBuffer(shape->indices , shape->indexBufferSize());
+
+    VertexBufferLayout layoutLight;
+    layoutLight.Push<float>(3);
+    layoutLight.Push<float>(3);
+    layoutLight.Push<float>(3);
+
+    _mVAO->AddBuffer(*_mVBO, layoutLight);
+    _mVAO->Bind();
+
+    _data = shape;
+}
+
+void Mesh::Parse(std::string filename){
+
     std::ifstream objFile(filename);
     std::ifstream objFileCopy(filename);
 
@@ -50,34 +46,35 @@ void Mesh::Parse(std::string filename, ShapeData* data){
     }
 
     int vertSize = 0;
-    int normalSize;
+    int normalSize = 0;
 
     std::vector<Vertex> vertices;
     std::vector<glm::vec3> normals;
 
     std::vector<unsigned int> indices;
-
-    int iters = 0;
     std::string line;
+
     while (std::getline(objFileCopy, line)) {
         std::istringstream iss(line);
         std::string token;
         iss >> token;
         if (token == "v") {
-            vertSize += 1;
+            vertSize++;
         }
-//        if(token == "vn" ){
-//            normalSize += 1;
-//            glm::vec3 normal;
-//            iss >> normal.x >> normal.y >> normal.z;
-//            //vertex.color = RANDOM_COLOR;
-//            normals.push_back(normal);
-//        }
-
+        if(token == "f"){
+            normalSize+=3;
+        }
     }
 
-    std::cout << normalSize << "COMPARe"<< std::endl;
-    std::cout << vertSize << "COMPARe"<< std::endl;
+    _vertexCount = vertSize;
+    _indexCount = normalSize;
+
+    _data = new ShapeData;
+    _data->indices = new unsigned int [_indexCount];
+    _data->vertices = new Vertex[_vertexCount];
+
+    std::cout << _vertexCount << "COMPARe"<< std::endl;
+    std::cout << _indexCount << "COMPARe"<< std::endl;
 
     while (std::getline(objFile, line)) {
         std::vector<int> indexVars;
@@ -87,31 +84,13 @@ void Mesh::Parse(std::string filename, ShapeData* data){
 
         iss >> token;
 
-
         if (token == "v") {
             Vertex vertex;
             iss >> vertex.position.x >> vertex.position.y >> vertex.position.z;
             vertex.color = glm::vec3 (1.0f, .05f, .5f);
             vertices.push_back(vertex);
         }
-        if (token == "vn") {
-
-        }
-//      } else if (token == "f") {
-//
-//            unsigned int ix1, ix2, ix3;
-//            iss >> ix1 >> ix2 >> ix3;
-//
-//            indices.push_back(ix1-1);
-//            indices.push_back(ix2-1);
-//            indices.push_back(ix3-1);
-//
-//        }
         else if (token == "f") {
-
-
-//            std::string index;
-
 
             long int ix1, ix2, ix3;
             long int nx1, nx2, nx3;
@@ -126,134 +105,26 @@ void Mesh::Parse(std::string filename, ShapeData* data){
 
                 if (block.find('/') != std::string::npos) {
 
-                    //std::cout << "String contains '/'" << std::endl;
-
                     std::vector<std::string> result;
 
                     std::istringstream bstream(block);
                     std::string index;
 
-
                     while (std::getline(bstream, index, '/')) {
                         indexVars.push_back(std::stoi(index));
-
-
-//                        std::cout << std::stol(index);
                     }
 
-                    // Display the result
-//                    for (const auto &substring : result) {
-//
-//                        std::cout << substring << std::endl;
-//
-//
-//                    }
-
-
                 } else {
-                    //std::cout << "String does not contain '/'" << std::endl;
 
                     indexVars.push_back(std::stoi(block));
-
-                    indexVars.push_back(0);
-                    indexVars.push_back(0);
 
                 }
             }
 
-
-////            iss >> ix1
-////            iss >> ix2
-////            iss >> ix3
-//
-//            std::string delimiter = "/";
-//            std::string begin = "f";
-//
-//            std::string part = iss.str();;
-//
-//            size_t pos = part.find(begin);
-//
-//            std::string token = part.substr(0, pos);
-//
-//            part.erase(0, pos + begin.length());
-//
-//            int ix = 0;
-//
-//            while ((pos = part.find(delimiter)) != std::string::npos) {
-//
-//                token = part.substr(0, pos);
-//
-//                ix++;
-//
-//                if(ix == 3 || ix == 5){
-//                    //std::cout << token << "TOKEN" << std::endl;
-//
-//                    std::istringstream tokenstream(token);
-//                    std::string newtoken;
-//
-//                    tokenstream >> newtoken;
-//                    //token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
-//                    //std::cout << std::stoi(newtoken) << std::endl;
-//                    //std::cout << std::stoi(token) << std::endl;
-//
-//                    indexVars.push_back(std::stol(newtoken));
-//
-//                    ix++;
-//                    tokenstream >> token;
-////                    std::string space = " ";
-////                    pos = token.find(space);
-////
-////                    token = token.substr(0, pos);
-////
-////                    token.erase(0, pos + space.length());
-////
-////                    token = token.substr(0, pos);
-////                    STRIP(token);
-////
-////                    std::cout << std::stoi(token) << " O"<< std::endl;
-////
-////                    indexVars.push_back(std::stoi(token));
-////
-////                    ix++;
-//
-//                }
-//
-//                STRIP(token);
-//                //token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
-//                //std::cout << std::stoi(token) << " ix " << ix << std::endl;
-//                //std::cout << std::stoi(token) << std::endl;
-//
-//                indexVars.push_back(std::stol(token));
-//
-//                part.erase(0, pos + delimiter.length());
-//
-//
-//
-//            }
-//
-//
-//
-////            std::cout << s << std::endl;
-//
-//            indices.push_back(ix1-1);
-//            indices.push_back(ix2-1);
-//            indices.push_back(ix3-1);
-//
-//
-//
-
-
             ix1 = indexVars[0];
-            ix2 = indexVars[3];
-            ix3 = indexVars[6];
+            ix2 = indexVars[1];
+            ix3 = indexVars[2];
 
-            nx1 = indexVars[1];
-            nx2 = indexVars[4];
-            nx3 = indexVars[7];
-
-            tx1 = indexVars[2];
-            tx2 = indexVars[5];
-            tx3 = indexVars[8];
 
             if(ix1 <= 0){
 
@@ -267,65 +138,15 @@ void Mesh::Parse(std::string filename, ShapeData* data){
                 indices.push_back(ix2 - 1);
                 indices.push_back(ix3 - 1);
 
-//                vertices[nx1-1].normal = normals[nx1-1];
-//                vertices[nx1-1].normal = normals[nx1-2];
-//                vertices[nx1-1].normal = normals[nx1-3];
-
-
-//                vertices[ix1-1].normal = normals[nx1-1];
-//                vertices[ix2-1].normal = normals[nx2-1];
-//                vertices[ix3-1].normal = normals[nx3-1];
-
             }
-
-
-
         }
-
-
     }
 
     objFile.close();
 
-
-    // Print the parsed vertices
-    data->numVertices = vertices.size();
+    _data->numVertices = vertices.size();
     std::cout << vertices.size();
-
-    data->numIndices = indices.size();
-
-    //data->vertices = new Vertex[data->numVertices];
-    //data->indices = new unsigned int[data->numIndices];
-
-//    std::cout<< data->numIndices << "INDICES" << std::endl;
-//    std::cout<< data->numVertices << "VERTICES" << std::endl;
-
-//    std::vector<unsigned int>::iterator i2 = std::min_element(std::begin(indices), std::end(indices));
-//
-//    std::cout <<  *i2 << "MIN" << std::endl;
-
-
-//    for (int i = 0; i < indices.size(); ++i) {
-//
-//
-//        if (indices[i] <= 0){
-//
-//            std::cout << indices[i] <<"," << std::endl;
-//            std::cout << vertices.size();
-//
-//            indices[i] += (long int) vertices.size();
-//
-//
-//
-//        }else{
-//
-//            indices[i] -= 1;
-//            std::cout << indices[i] <<"," << std::endl;
-//
-//        }
-//
-//
-//    }
+    _data->numIndices = indices.size();
 
     normals = computeNormals(vertices, indices);
 
@@ -333,17 +154,33 @@ void Mesh::Parse(std::string filename, ShapeData* data){
         vertices[i].normal = normals[i];
     }
 
-    memcpy(data->indices, &indices[0], sizeof (unsigned int) * indices.size());
-    memcpy(data->vertices, &vertices[0], sizeof (Vertex) * vertices.size());
+    unsigned int exampleI[] = {1,2,3,4,5,6,7,8,9,10};
+    Vertex exampleV[] = {Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}};
+    memcpy(_data->indices, &indices[0], sizeof (unsigned int) * indices.size());
+    memcpy(_data->vertices, &vertices[0], sizeof (Vertex) * vertices.size());
 
+//    memcpy(_data->indices, &indices[0], sizeof (unsigned int) * 20);
+//    memcpy(_data->vertices, &vertices[0], sizeof (Vertex) * 20);
 
+//    memcpy(_data->indices, exampleI, sizeof (unsigned int) * 11);
+//    memcpy(_data->vertices, exampleV, sizeof (Vertex) * 6);
 
+    _mVBO = new VertexBuffer(_data->vertices, vertices.size());
+    _mIBO = new IndexBuffer(_data->indices , indices.size());
 
-//    for (int i = 0; i < data->numIndices; ++i) {
-//        std::cout << data->indices[i] << std::endl;;
-//    }
+    std::cout << "READDD" <<std::endl;
+    std::cout << vertices.size() * sizeof (Vertex) <<std::endl;
+
+    VertexBufferLayout layout;
+    layout.Push<float>(3);
+    layout.Push<float>(3);
+    layout.Push<float>(3);
+
+    _mVAO->AddBuffer(*_mVBO, layout);
+    _mVAO->Bind();
 
 }
+
 std::vector<glm::vec3> Mesh::computeNormals(std::vector<Vertex>& vertexArray,
                     std::vector<unsigned int>& indexArray){
 
@@ -376,20 +213,9 @@ std::vector<glm::vec3> Mesh::computeNormals(std::vector<Vertex>& vertexArray,
     }
 
     return normalArray;
+
 }
 
 void Mesh::showVertices(){
 
-//
-//    std::cout<< data-> numVertices << std::endl;
-//
-//    for (int i = 0; i < data->numVertices; ++i) {
-//        std::cout << glm::to_string(data->vertices[i].position) << std::endl;
-//        std::cout << glm::to_string(data->vertices[i].color) << std::endl;
-//    }
-//
-//
-//    for (int i = 0; i < data->numIndices; ++i) {
-//        std::cout << data->indices[i] << std::endl;;
-//    }
 }
