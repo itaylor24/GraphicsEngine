@@ -6,7 +6,7 @@
 #include "glfw/include/GLFW/glfw3.h"
 #include <glm/gtx/rotate_vector.hpp>
 
-Camera::Camera():
+Camera::Camera(int width, int height):
     _camFocus(0.0f,0.f, 0.0f),
     _up(0.0f, 1.0f, 0.0f),
     _yaw(0.f),
@@ -19,13 +19,14 @@ Camera::Camera():
     {
         _position = _camFocus + (_initialView*_radius * -1.f);
         _viewDirection = _camFocus - _position;
+
+        _projectionMatrix = glm::perspective(glm::radians(60.0f), ((float)width) / (float)height, 0.1f, 10000.0f);
+        _MVP = _projectionMatrix * getWorldToViewMatrix();
     }
 
 void Camera::mouseUpdate(const glm::vec2& newMousePosition){
 
     glm::vec2 mouseDelta = newMousePosition - _oldMousePosition;
-    //std::cout << glm::length(mouseDelta) << std::endl;
-    glm::mat4 rotation(1.0f);
 
     if (glm::length(mouseDelta) < 30.f && glm::length(mouseDelta) > 0){
 
@@ -45,16 +46,20 @@ void Camera::mouseUpdate(const glm::vec2& newMousePosition){
 
     }
 
-
     _oldMousePosition = newMousePosition;
 
+    _MVP = _projectionMatrix * getWorldToViewMatrix();
+
+}
+glm::mat4 Camera::getMVP() const {
+    return _MVP;
 }
 
 glm::mat4 Camera::getWorldToViewMatrix() const{
     return glm::lookAt(_position, _camFocus, _up);
 }
 
-void Camera::moveForward(){
+void Camera::zoomIn(){
 //    _position += _moveSpeed * glm::normalize(_viewDirection);
 //    glm::normalize(_viewDirection =_camFocus-_position);
     if (_radius > 5.f) {
@@ -64,8 +69,9 @@ void Camera::moveForward(){
     }
     _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius * -1.f);
     _viewDirection = _camFocus - _position;
+    _MVP = _projectionMatrix * getWorldToViewMatrix();
 }
-void Camera::moveBackward(){
+void Camera::zoomOut(){
 //    _position += _moveSpeed * -1.f * glm::normalize(_viewDirection);
 //    _viewDirection =glm::normalize(_camFocus-_position);
 
@@ -73,17 +79,6 @@ void Camera::moveBackward(){
 
     _position = _camFocus + (glm::normalize(_camFocus - _position)*_radius * -1.f);
     _viewDirection = _camFocus - _position;
+    _MVP = _projectionMatrix * getWorldToViewMatrix();
 }
-void Camera::moveLeft(){
-//    _position += _moveSpeed * -1.f * glm::cross(_viewDirection, _up);
-}
-void Camera::moveRight(){
-//    _position += _moveSpeed  * glm::cross(_viewDirection, _up);
-}
-void Camera::moveUp(){
-//    _position += _moveSpeed * -1.f * _up;
-}
-void Camera::moveDown(){
-//    _position += _moveSpeed * _up;
 
-}

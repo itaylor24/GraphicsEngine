@@ -15,6 +15,15 @@ set(IMGUI_SRC
         imgui/imgui_tables.cpp
         imgui/imgui_widgets.cpp
         imgui/imgui_demo.cpp
+        MeshLayout.h
+        Model.cpp
+        Model.h
+        RenderingItem.cpp
+        RenderingItem.h
+        LightSource.cpp
+        LightSource.h
+        Scene.cpp
+        Scene.h
 )
 
 

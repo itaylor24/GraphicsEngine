@@ -12,31 +12,27 @@
 #include "Types.h"
 #include "utils.h"
 #include "Shapes.h"
+#include "MeshLayout.h"
 
-Mesh::Mesh(std::string filename){
-    _mVAO = new VertexArray;
-    Parse(filename);
+Mesh::Mesh(std::string filename) : _data(Parse(filename)){
+    Setup();
+}
+Mesh::Mesh(ShapeData* shape) : _data(shape){
+    Setup();
 }
 
-Mesh::Mesh(ShapeData* shape){
-
+void Mesh::Setup(){
     _mVAO = new VertexArray;
+    _mVBO = new VertexBuffer(_data);
+    _mIBO = new IndexBuffer(_data);
 
-    _mVBO = new VertexBuffer(shape->vertices, shape->vertexBufferSize());
-    _mIBO = new IndexBuffer(shape->indices , shape->indexBufferSize());
+    MeshLayout* layoutLight = new MeshLayout();
 
-    VertexBufferLayout layoutLight;
-    layoutLight.Push<float>(3);
-    layoutLight.Push<float>(3);
-    layoutLight.Push<float>(3);
-
-    _mVAO->AddBuffer(*_mVBO, layoutLight);
+    _mVAO->AddBuffer(*_mVBO, *layoutLight);
     _mVAO->Bind();
-
-    _data = shape;
 }
 
-void Mesh::Parse(std::string filename){
+ShapeData* Mesh::Parse(std::string filename){
 
     std::ifstream objFile(filename);
     std::ifstream objFileCopy(filename);
@@ -69,12 +65,8 @@ void Mesh::Parse(std::string filename){
     _vertexCount = vertSize;
     _indexCount = normalSize;
 
-    _data = new ShapeData;
-    _data->indices = new unsigned int [_indexCount];
-    _data->vertices = new Vertex[_vertexCount];
-
-    std::cout << _vertexCount << "COMPARe"<< std::endl;
-    std::cout << _indexCount << "COMPARe"<< std::endl;
+    indices.reserve(_indexCount);
+    vertices.reserve(_vertexCount);
 
     while (std::getline(objFile, line)) {
         std::vector<int> indexVars;
@@ -144,40 +136,18 @@ void Mesh::Parse(std::string filename){
 
     objFile.close();
 
-    _data->numVertices = vertices.size();
-    std::cout << vertices.size();
-    _data->numIndices = indices.size();
+    ShapeData* shapeData = new ShapeData(_vertexCount, _indexCount);
 
     normals = computeNormals(vertices, indices);
-
     for (int i = 0; i < vertices.size(); ++i) {
         vertices[i].normal = normals[i];
     }
 
-    unsigned int exampleI[] = {1,2,3,4,5,6,7,8,9,10};
-    Vertex exampleV[] = {Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}, Vertex{{1,2,3}}};
-    memcpy(_data->indices, &indices[0], sizeof (unsigned int) * indices.size());
-    memcpy(_data->vertices, &vertices[0], sizeof (Vertex) * vertices.size());
+    memcpy(shapeData->indices, &indices[0], sizeof (unsigned int) * indices.size());
+    memcpy(shapeData->vertices, &vertices[0], sizeof (Vertex) * vertices.size());
 
-//    memcpy(_data->indices, &indices[0], sizeof (unsigned int) * 20);
-//    memcpy(_data->vertices, &vertices[0], sizeof (Vertex) * 20);
 
-//    memcpy(_data->indices, exampleI, sizeof (unsigned int) * 11);
-//    memcpy(_data->vertices, exampleV, sizeof (Vertex) * 6);
-
-    _mVBO = new VertexBuffer(_data->vertices, vertices.size());
-    _mIBO = new IndexBuffer(_data->indices , indices.size());
-
-    std::cout << "READDD" <<std::endl;
-    std::cout << vertices.size() * sizeof (Vertex) <<std::endl;
-
-    VertexBufferLayout layout;
-    layout.Push<float>(3);
-    layout.Push<float>(3);
-    layout.Push<float>(3);
-
-    _mVAO->AddBuffer(*_mVBO, layout);
-    _mVAO->Bind();
+    return shapeData;
 
 }
 
@@ -213,9 +183,5 @@ std::vector<glm::vec3> Mesh::computeNormals(std::vector<Vertex>& vertexArray,
     }
 
     return normalArray;
-
-}
-
-void Mesh::showVertices(){
 
 }

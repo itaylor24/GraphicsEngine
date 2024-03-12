@@ -13,6 +13,7 @@
 #include "VertexBuffer.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include "Model.h"
 
 
 
@@ -22,11 +23,19 @@
 class Renderer {
 
     public:
+
         Renderer();
         void Draw(Mesh* mesh, const Shader& shader);
+        void Draw(const std::vector<std::pair<Mesh*, Shader&>>& items);
+        void Draw();
         void Draw(VertexArray& VAO, IndexBuffer& IBO, const Shader &shader);
         void Clear();
 
+        void Draw(std::vector<RenderingItem*> items);
+
+        std::vector<RenderingItem*> _items;
+        void AddItem(Mesh* mesh, Shader &shader);
+        void AddItem(RenderingItem* item);
 
 };
 

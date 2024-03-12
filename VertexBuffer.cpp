@@ -10,7 +10,13 @@
 VertexBuffer::VertexBuffer(const void* data, unsigned int count){
     GL_CALL(glGenBuffers( 1, &_rendererID ));
     GL_CALL(glBindBuffer( GL_ARRAY_BUFFER, _rendererID));
-    GL_CALL(glBufferData( GL_ARRAY_BUFFER, count * sizeof(Vertex), data, GL_STATIC_DRAW ));
+    GL_CALL(glBufferData( GL_ARRAY_BUFFER, count, data, GL_STATIC_DRAW ));
+}
+
+VertexBuffer::VertexBuffer(ShapeData* shape){
+    GL_CALL(glGenBuffers( 1, &_rendererID ));
+    GL_CALL(glBindBuffer( GL_ARRAY_BUFFER, _rendererID));
+    GL_CALL(glBufferData( GL_ARRAY_BUFFER, shape->vertexBufferSize(), shape->vertices, GL_STATIC_DRAW ));
 }
 
 VertexBuffer::VertexBuffer() {

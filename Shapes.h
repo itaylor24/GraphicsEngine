@@ -13,6 +13,14 @@ struct ShapeData{
     ShapeData() :
         vertices(0), numVertices(0),
         indices(0), numIndices(0){}
+
+    ShapeData(int vCount, int iCount) :
+    vertices(new Vertex[vCount]),
+    numVertices(vCount),
+    indices(new unsigned int[iCount]),
+    numIndices(iCount)
+    {};
+
     Vertex* vertices;
     GLuint  numVertices;
     unsigned int* indices;

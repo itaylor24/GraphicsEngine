@@ -8,12 +8,16 @@
 
 
 IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int count) : _count(count) {
-
     assert(sizeof (unsigned int) == sizeof (GLuint));
-
     GL_CALL(glGenBuffers( 1, &_rendererID ));
     GL_CALL(glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _rendererID));
-    GL_CALL(glBufferData( GL_ELEMENT_ARRAY_BUFFER, count * sizeof (unsigned int), data, GL_STATIC_DRAW ));
+    GL_CALL(glBufferData( GL_ELEMENT_ARRAY_BUFFER, count, data, GL_STATIC_DRAW ));
+}
+IndexBuffer::IndexBuffer(ShapeData* shape) : _count(shape->numIndices) {
+    assert(sizeof (unsigned int) == sizeof (GLuint));
+    GL_CALL(glGenBuffers( 1, &_rendererID ));
+    GL_CALL(glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, _rendererID));
+    GL_CALL(glBufferData( GL_ELEMENT_ARRAY_BUFFER, shape->indexBufferSize(), shape->indices, GL_STATIC_DRAW ));
 }
 IndexBuffer::IndexBuffer(){
 

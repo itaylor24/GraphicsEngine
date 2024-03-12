@@ -5,6 +5,8 @@
 #ifndef GRAPHICSENGINE_INDEXBUFFER_H
 #define GRAPHICSENGINE_INDEXBUFFER_H
 
+#include "Shapes.h"
+
 class IndexBuffer {
 
 private:
@@ -12,6 +14,7 @@ private:
     unsigned int _count;
 public:
     IndexBuffer(const unsigned int* data, unsigned int count);
+    IndexBuffer(ShapeData* shape);
     IndexBuffer();
     ~IndexBuffer();
 

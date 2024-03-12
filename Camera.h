@@ -19,6 +19,8 @@ private:
     glm::vec3 _initialView;
     glm::vec2  _oldMousePosition;
     glm::mat4 _rotation;
+    glm::mat4  _projectionMatrix;
+    glm::mat4 _MVP;
     float _moveSpeed;
     float _yaw;
     float _pitch;
@@ -26,18 +28,13 @@ private:
 
 
 public:
-    Camera();
+    Camera(int width, int height);
     glm::mat4 getWorldToViewMatrix() const;
+    glm::mat4 getMVP() const;
+
     void mouseUpdate(const glm::vec2& newMousePosition);
-
-    void moveForward();
-    void moveBackward();
-
-    void moveLeft();
-    void moveRight();
-
-    void moveUp();
-    void moveDown();
+    void zoomIn();
+    void zoomOut();
 
 };
 

@@ -20,19 +20,17 @@
 class Mesh {
 
 public:
-    void Parse(std::string filename);
+    ShapeData* Parse(std::string filename);
     Mesh(std::string filename);
     Mesh(ShapeData* shape);
-    void showVertices();
-    ShapeData* _data;
+    void Setup();
     static std::vector<glm::vec3> computeNormals(std::vector<Vertex>& vertexArray,
                                           std::vector<unsigned int>& indexArray);
     ShapeData* getInfo();
-
+    ShapeData* _data;
     VertexArray* _mVAO;
     VertexBuffer* _mVBO;
     IndexBuffer* _mIBO;
-
     int _vertexCount;
     int _indexCount;
 };

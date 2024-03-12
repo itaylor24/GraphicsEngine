@@ -6,7 +6,7 @@ layout(location = 1) in vec3 vertColor;
 layout(location = 2) in vec3 normal;
 
 uniform mat4 MVP;
-uniform vec3 ambientLight;
+uniform vec3 diffuseColor;
 
 out vec3 theNormal;
 out vec3 thePosition;

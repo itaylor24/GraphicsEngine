@@ -65,8 +65,6 @@ class VertexBufferLayout{
         inline unsigned int getStride() const { return _stride; }
 
 
-
-
 };
 
 #endif //GRAPHICSENGINE_VERTEXBUFFERLAYOUT_H

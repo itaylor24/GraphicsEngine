@@ -5,12 +5,15 @@
 #ifndef GRAPHICSENGINE_VERTEXBUFFER_H
 #define GRAPHICSENGINE_VERTEXBUFFER_H
 
+#include "Shapes.h"
+
 class VertexBuffer {
 
     private:
         unsigned int _rendererID;
     public:
         VertexBuffer(const void* data, unsigned int size);
+        VertexBuffer(ShapeData* shape);
         VertexBuffer();
         ~VertexBuffer();
 
